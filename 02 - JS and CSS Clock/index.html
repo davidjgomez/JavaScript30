@@ -62,12 +62,30 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
   </style>
 
   <script>
+  
+    function setHand(value, divideBy, handName) {
+      const degree = ((value / divideBy) * 360) + 90;
+      const hand = document.querySelector(`.${handName}-hand`);
+      hand.style.transform = `rotate(${degree}deg)`;
+    }
 
+    function setDate() {
+      const now = new Date();
+      setHand(now.getSeconds(), 60, 'second');
+      setHand(now.getMinutes(), 60, 'min');
+      setHand(now.getHours(), 12, 'hour');
+    }
+
+    setInterval(setDate, 1000);
 
   </script>
 </body>
