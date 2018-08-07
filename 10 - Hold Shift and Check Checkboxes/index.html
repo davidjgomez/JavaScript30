@@ -99,6 +99,24 @@
   </div>
 
 <script>
+    const checkBoxes = Array.of(...document.querySelectorAll('input[type="checkbox"]'));
+    let previous;
+
+    function selectMultipleCheckBoxes(e) {
+        const current = this;
+        
+        if(e.shiftKey && this.checked && previous.checked) {
+          let previousIndex = checkBoxes.indexOf(previous);
+          let currentIndex = checkBoxes.indexOf(current);
+          const [firstIndex, lastIndex] = currentIndex > previousIndex ? [previousIndex, currentIndex] : [currentIndex, previousIndex];
+
+          checkBoxes.slice(firstIndex, lastIndex).forEach(selected => selected.checked = true);
+        }
+
+        previous = this;
+    }
+
+    checkBoxes.forEach(checkBox => checkBox.addEventListener('click', selectMultipleCheckBoxes));
 </script>
 </body>
 </html>
